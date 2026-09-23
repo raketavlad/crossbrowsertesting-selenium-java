@@ -1,10 +1,10 @@
-package tests.crossbrowsertesting;
+package tests.internalpages;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import tests.base.BaseTest;
+import tests.base.BasePageTest;
 
-public class FirstTest extends BaseTest {
+public class SeleniumExamplePageTest extends BasePageTest {
 
     @BeforeMethod
     public void openPage() {
@@ -13,27 +13,27 @@ public class FirstTest extends BaseTest {
 
     @Test
     public void checkHeadline () {
-        firstPage.checkHeadline();
+        seleniumExamplePage.checkHeadline();
     }
 
     @Test
     public void checkIntro() {
-        firstPage.checkIntro();
+        seleniumExamplePage.checkIntro();
     }
 
     @Test
     public void checkList() {
-        firstPage.checkTitleList().checkList();
+        seleniumExamplePage.checkTitleList().checkList();
     }
 
     @Test
     public void checkLink() {
-        firstPage.checkLink();
+        seleniumExamplePage.checkLink();
     }
 
     @Test
     public void checkButton() {
-        firstPage.checkButton();
+        seleniumExamplePage.checkButton();
     }
 
 }

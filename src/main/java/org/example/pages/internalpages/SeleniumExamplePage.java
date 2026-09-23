@@ -1,4 +1,4 @@
-package org.example.pages.crossbrowsertesting;
+package org.example.pages.internalpages;
 
 import org.example.pages.base.BasePage;
 import org.openqa.selenium.By;
@@ -8,7 +8,7 @@ import org.testng.Assert;
 
 import java.util.List;
 
-public class FirstPage extends BasePage {
+public class SeleniumExamplePage extends BasePage {
 
     private final By headline = By.xpath("(//h2)[1]");
     private final By intro = By.id("intro");
@@ -33,27 +33,27 @@ public class FirstPage extends BasePage {
 
     private final By submitButton = By.cssSelector("#myform #submitbtn");
 
-    public FirstPage(WebDriver driver) {
+    public SeleniumExamplePage(WebDriver driver) {
         super(driver);
     }
 
-    public FirstPage checkHeadline() {
+    public SeleniumExamplePage checkHeadline() {
         Assert.assertEquals(driver.findElement(headline).getText(), "Selenium Test Example Page");
         return this;
     }
 
-    public FirstPage checkIntro() {
+    public SeleniumExamplePage checkIntro() {
         Assert.assertEquals(driver.findElement(intro).getText(), "A very basic example page for" +
                 " running remote Selenium Tests on the CrossBrowserTesting.com platform.");
         return this;
     }
 
-    public FirstPage checkTitleList() {
+    public SeleniumExamplePage checkTitleList() {
         Assert.assertEquals(driver.findElement(titleList).getText(), "Unordered List");
         return this;
     }
 
-    public FirstPage checkList() {
+    public SeleniumExamplePage checkList() {
         List<String> actualList = driver.findElements(list).stream()
                 .map(WebElement::getText)
                 .toList();
@@ -61,7 +61,7 @@ public class FirstPage extends BasePage {
         return this;
     }
 
-    public FirstPage checkLink() {
+    public SeleniumExamplePage checkLink() {
         driver.findElement(link).click();
         Assert.assertEquals(driver.getCurrentUrl(),
                 "https://crossbrowsertesting.github.io/selenium_example_page2.html");
@@ -72,7 +72,7 @@ public class FirstPage extends BasePage {
         return this;
     }
 
-    public FirstPage checkButton() {
+    public SeleniumExamplePage checkButton() {
         driver.findElement(button).click();
         Assert.assertEquals(driver.findElement(By.id("button-message")).getText(),
                 "I am the message!!");
