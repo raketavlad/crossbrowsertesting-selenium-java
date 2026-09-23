@@ -25,8 +25,8 @@ public class SeleniumExamplePage extends BasePage {
 
     // Селекторы формы ввода
     private final By titleForm = By.xpath("//p[text()='Form Elements']");
-    private final By input = By.cssSelector("input[type='text']");
-    private final By checkbox = By.cssSelector("input[type='checkbox']");
+    private final By inputText = By.cssSelector("input[name='text']");
+    private final By checkbox = By.cssSelector("input[name='checkbox']");
     private final By dropdown = By.id("dropdown");
     private final By dropdownOption1 = By.cssSelector("option[value='option1']");
     private final By dropdownOption2 = By.cssSelector("option[value='option2']");
@@ -92,4 +92,33 @@ public class SeleniumExamplePage extends BasePage {
                 "I am the message!!");
         return this;
     }
+
+    public SeleniumExamplePage checkTitleForm() {
+        Assert.assertEquals(driver.findElement(titleForm).getText(), "Form Elements");
+        return this;
+    }
+
+    public SeleniumExamplePage checkInputTextPlaceholder() {
+        Assert.assertEquals(driver.findElement(inputText).getAttribute("placeholder"),
+                "Input Text Here");
+        return this;
+    }
+
+    public SeleniumExamplePage setText(String text) {
+        driver.findElement(inputText).sendKeys(text);
+        return this;
+    }
+
+    public SeleniumExamplePage checkTextResult(String text) {
+        Assert.assertEquals(driver.findElement(textResult).getText(),
+                text);
+        return this;
+    }
+
+    public SeleniumExamplePage pressSubmitButton() {
+        driver.findElement(submitButton).click();
+        return this;
+    }
+
+
 }
