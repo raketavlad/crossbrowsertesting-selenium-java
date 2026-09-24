@@ -1,11 +1,11 @@
 package org.example.pages.internalpages;
 
 import org.example.pages.base.BasePage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.List;
 
 public class SeleniumExamplePage extends BasePage {
@@ -114,6 +114,32 @@ public class SeleniumExamplePage extends BasePage {
                 text);
         return this;
     }
+
+    public SeleniumExamplePage chooseCheckbox(boolean isOn) {
+        if (isOn) {
+            driver.findElement(checkbox).click();
+        }
+        return this;
+    }
+
+    public SeleniumExamplePage checkCheckbox(boolean expectedExist) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebElement element = null;
+        try {
+            element = wait.until(d -> d.findElement(checkboxResult));
+        } catch (TimeoutException ignored) {
+
+        }
+
+        if (expectedExist) {
+            Assert.assertNotNull(element, "Ошибка: Ожидали, что элемент появится, но его нет на странице!");
+            Assert.assertEquals(element.getText(), "on", "Текст элемента не соответствует 'on'!");
+        } else {
+            Assert.assertNull(element, "Ошибка: Ожидали, что элемента НЕ БУДЕТ, но он присутствует на странице!");
+        }
+        return this;
+    }
+
 
     public SeleniumExamplePage pressSubmitButton() {
         driver.findElement(submitButton).click();
