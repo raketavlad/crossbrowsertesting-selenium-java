@@ -1,7 +1,10 @@
 package org.example.pages.internalpages;
 
 import org.example.pages.base.BasePage;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -44,7 +47,7 @@ public class SeleniumExamplePage extends BasePage {
     private final By checkboxResult = By.xpath("//span[text()='checkbox']/following-sibling::span");
     private final By selectOptions = By.xpath("//span[text()='select']/following-sibling::span");
     private final By radioResult = By.xpath("//span[text()='radio']/following-sibling::span");
-    private final By getTextareaResult = By.xpath("//span[text()='textarea']/following-sibling::span");
+    private final By textareaResult = By.xpath("//span[text()='textarea']/following-sibling::span");
 
 
     public SeleniumExamplePage(WebDriver driver) {
@@ -140,6 +143,66 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
+    public SeleniumExamplePage selectAnOption(String option) {
+        driver.findElement(dropdown).click();
+        // можно упростить через класс Select и Try-Catch (НУЖНО РАЗОБРАТЬСЯ И ОТРЕФАКТОРИТЬ)
+        switch (option) {
+            case ("option1"):
+                driver.findElement(dropdownOption1).click();
+                break;
+            case ("option2"):
+                driver.findElement(dropdownOption2).click();
+                break;
+            case ("option3"):
+                driver.findElement(dropdownOption3).click();
+                break;
+            case ("option4"):
+                driver.findElement(dropdownOption4).click();
+                break;
+            default:
+                Assert.fail("Выбранная опция отсутствует в выпадающем списке");
+                break;
+        }
+        return this;
+    }
+
+    public SeleniumExamplePage checkSelectedOption(String option) {
+        Assert.assertEquals(driver.findElement(selectOptions).getText(), option,
+                "Опция не соответствует выбранной");
+        return this;
+    }
+
+    public SeleniumExamplePage selectAnRadio(String radio) {
+        // можно упростить через класс Select и Try-Catch (НУЖНО РАЗОБРАТЬСЯ И ОТРЕФАКТОРИТЬ)
+        switch (radio) {
+            case ("radio1"):
+                driver.findElement(radio1).click();
+                break;
+            case ("radio2"):
+                driver.findElement(radio2).click();
+                break;
+            default:
+                Assert.fail("Выбранный radio отсутствует на странице");
+                break;
+        }
+        return this;
+    }
+
+    public SeleniumExamplePage checkSelectedRadio(String radio) {
+        Assert.assertEquals(driver.findElement(radioResult).getText(), radio,
+                "Radio не соответствует выбранному");
+        return this;
+    }
+
+    public SeleniumExamplePage setTextarea(String text) {
+        driver.findElement(textarea).sendKeys(text);
+        return this;
+    }
+
+    public SeleniumExamplePage checkTextarea(String text) {
+        Assert.assertEquals(driver.findElement(textareaResult).getText(), text);
+        return this;
+    }
 
     public SeleniumExamplePage pressSubmitButton() {
         driver.findElement(submitButton).click();
