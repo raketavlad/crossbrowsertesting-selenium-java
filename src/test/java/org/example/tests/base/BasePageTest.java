@@ -1,4 +1,4 @@
-package tests.base;
+package org.example.tests.base;
 
 import org.example.common.CommonAction;
 import org.example.pages.base.BasePage;
