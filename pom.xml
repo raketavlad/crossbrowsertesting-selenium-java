@@ -21,11 +21,23 @@
         <testng.version>7.11.0</testng.version>
         <allure.version>2.29.0</allure.version>
         <aspectj.version>1.9.21</aspectj.version>
-        <testngXML>testng.xml</testngXML>
+        <testngXML>smoke.xml</testngXML>
     </properties>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -47,7 +59,7 @@
                 </dependencies>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/${testngXML}</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/suites/${testngXML}</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
