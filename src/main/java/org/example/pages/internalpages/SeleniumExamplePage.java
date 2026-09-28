@@ -42,7 +42,7 @@ public class SeleniumExamplePage extends BasePage {
 
 
     // Селекторы результата
-    private final By formResults = By.cssSelector("#form-results p");
+    private final By titleFormResults = By.cssSelector("#form-results p");
     private final By textResult = By.xpath("//span[text()='text']/following-sibling::span");
     private final By checkboxResult = By.xpath("//span[text()='checkbox']/following-sibling::span");
     private final By selectOptions = By.xpath("//span[text()='select']/following-sibling::span");
@@ -201,6 +201,11 @@ public class SeleniumExamplePage extends BasePage {
 
     public SeleniumExamplePage checkTextarea(String text) {
         Assert.assertEquals(driver.findElement(textareaResult).getText(), text);
+        return this;
+    }
+
+    public SeleniumExamplePage checkResultTitle() {
+        Assert.assertEquals(driver.findElement(titleFormResults).getText(), "Form Results");
         return this;
     }
 
