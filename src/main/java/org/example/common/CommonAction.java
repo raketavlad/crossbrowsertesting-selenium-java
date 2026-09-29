@@ -3,6 +3,8 @@ package org.example.common;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
 
 import java.time.Duration;
@@ -22,12 +24,21 @@ public class CommonAction {
         if (driver == null) {
             switch (PLATFORM_AND_BROWSER) {
                 case "win_chrome":
-                    ChromeOptions options = new ChromeOptions();
-                    options.addArguments(
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments(
                             "--headless=new",
                             "--window-size=1920,1080"
                     );
-                    driver = new ChromeDriver(options);
+                    driver = new ChromeDriver(chromeOptions);
+                    break;
+                case "win_firefox":
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxOptions.addArguments(
+                            "-headless",
+                            "--width=1920",
+                            "--height=1080"
+                    );
+                    driver = new FirefoxDriver(firefoxOptions);
                     break;
                 default:
                     Assert.fail("Incorrect platform or browser name: " + PLATFORM_AND_BROWSER);
