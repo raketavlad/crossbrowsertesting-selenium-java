@@ -14,7 +14,8 @@ import java.time.Duration;
 
 public final class DriverFactory {
 
-    private DriverFactory() {}
+    private DriverFactory() {
+    }
 
     public static WebDriver createDriver(String browserName) {
         BrowserType browser = BrowserType.fromString(browserName);

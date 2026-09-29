@@ -10,26 +10,19 @@ import org.testng.annotations.Parameters;
 
 public abstract class BasePageTest {
 
-    protected WebDriver driver;
-
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
     public void setUp(@Optional("chrome") String browser) {
-        // 1. Создаём драйвер под конкретный браузер
-        driver = DriverFactory.createDriver(browser);
-
-        // 2. Сохраняем в ThreadLocal (изоляция между потоками)
+        WebDriver driver = DriverFactory.createDriver(browser);
         DriverManager.setDriver(driver);
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        // alwaysRun=true гарантирует закрытие даже если @BeforeMethod упал
         DriverManager.quitDriver();
-        this.driver = null;
     }
 
     protected WebDriver getDriver() {
-        return driver;
+        return DriverManager.getDriver();
     }
 }

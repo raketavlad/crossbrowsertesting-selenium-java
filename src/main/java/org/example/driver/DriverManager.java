@@ -4,13 +4,10 @@ import org.openqa.selenium.WebDriver;
 
 public final class DriverManager {
 
-    /**
-     * Каждый поток получает свою копию WebDriver.
-     * Именно это обеспечивает thread-safety при параллельном запуске.
-     */
     private static final ThreadLocal<WebDriver> DRIVER = new ThreadLocal<>();
 
-    private DriverManager() {}
+    private DriverManager() {
+    }
 
     public static WebDriver getDriver() {
         WebDriver driver = DRIVER.get();
@@ -25,21 +22,14 @@ public final class DriverManager {
         DRIVER.set(driver);
     }
 
-    public static boolean hasDriver() {
-        return DRIVER.get() != null;
-    }
-
-    /**
-     * ВАЖНО: сначала quit(), затем remove() — иначе возможна утечка памяти.
-     */
     public static void quitDriver() {
-        if (hasDriver()) {
+        WebDriver driver = DRIVER.get();
+        if (driver != null) {
             try {
-                DRIVER.get().quit();
+                driver.quit();
             } finally {
                 DRIVER.remove();
             }
         }
     }
-
 }
