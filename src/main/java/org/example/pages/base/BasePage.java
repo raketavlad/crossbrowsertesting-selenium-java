@@ -1,29 +1,28 @@
 package org.example.pages.base;
 
+import org.example.common.ConfigReader;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static org.example.common.Config.EXPLICIT_WAIT;
-
-public class BasePage {
+public abstract class BasePage {
 
     protected WebDriver driver;
-    protected WebDriver wait;
+    protected WebDriverWait wait;
+    private final String relativePath;
 
-    public BasePage(WebDriver driver) {
+    public BasePage(WebDriver driver, String relativePath) {
         this.driver = driver;
+        this.relativePath = relativePath;
+        this.wait = new WebDriverWait(driver,
+                Duration.ofSeconds(ConfigReader.getInt("explicit.wait", 15)));
+        PageFactory.initElements(driver, this);
     }
 
-    public void open(String url) {
-        driver.get(url);
-    }
-
-    public WebElement waitElementIsVisible(WebElement element) {
-        new WebDriverWait(driver, Duration.ofSeconds(EXPLICIT_WAIT)).until(ExpectedConditions.visibilityOf(element));
-        return element;
+    public void open() {
+        String baseUrl = ConfigReader.get("base.url", "https://crossbrowsertesting.github.io");
+        driver.get(baseUrl + relativePath);
     }
 }

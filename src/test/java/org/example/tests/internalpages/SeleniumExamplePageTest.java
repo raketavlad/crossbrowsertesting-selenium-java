@@ -1,18 +1,22 @@
 package org.example.tests.internalpages;
 
+import org.example.pages.internalpages.SeleniumExamplePage;
+import org.example.tests.base.BasePageTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.example.tests.base.BasePageTest;
 
 public class SeleniumExamplePageTest extends BasePageTest {
 
+    private SeleniumExamplePage seleniumExamplePage;
+
     @BeforeMethod(alwaysRun = true)
     public void openPage() {
-        basePage.open("https://crossbrowsertesting.github.io/selenium_example_page.html");
+        seleniumExamplePage = new SeleniumExamplePage(driver);
+        seleniumExamplePage.open();
     }
 
     @Test(groups = "regress")
-    public void checkHeadline () {
+    public void checkHeadline() {
         seleniumExamplePage.checkHeadline();
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="Regression">
+<suite name="Regression" parallel="methods" thread-count="4">
     <test name="groups">
         <groups>
             <run>
@@ -10,7 +10,7 @@
             </run>
         </groups>
         <packages>
-            <package name="org.example.tests.*"></package>
+            <package name="org.example.tests.internalpages"></package>
         </packages>
     </test>
 </suite>

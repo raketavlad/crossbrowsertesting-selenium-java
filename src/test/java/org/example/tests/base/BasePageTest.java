@@ -1,19 +1,35 @@
 package org.example.tests.base;
 
-import org.example.common.CommonAction;
-import org.example.pages.base.BasePage;
-import org.example.pages.internalpages.SeleniumExamplePage;
+import org.example.driver.DriverFactory;
+import org.example.driver.DriverManager;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
-public class BasePageTest {
+public abstract class BasePageTest {
 
-    protected WebDriver driver = CommonAction.createDriver();
-    protected BasePage basePage = new BasePage(driver);
-    protected SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(driver);
+    protected WebDriver driver;
 
-    @AfterSuite(alwaysRun = true)
-    public void quitDriver() {
-        driver.quit();
+    @Parameters({"browser"})
+    @BeforeMethod(alwaysRun = true)
+    public void setUp(@Optional("chrome") String browser) {
+        // 1. Создаём драйвер под конкретный браузер
+        driver = DriverFactory.createDriver(browser);
+
+        // 2. Сохраняем в ThreadLocal (изоляция между потоками)
+        DriverManager.setDriver(driver);
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void tearDown() {
+        // alwaysRun=true гарантирует закрытие даже если @BeforeMethod упал
+        DriverManager.quitDriver();
+        this.driver = null;
+    }
+
+    protected WebDriver getDriver() {
+        return driver;
     }
 }
