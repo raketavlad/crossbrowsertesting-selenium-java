@@ -1,6 +1,7 @@
 package org.example.tests.internalpages;
 
 import org.example.pages.internalpages.SeleniumExamplePage;
+import org.example.pages.internalpages.SeleniumExamplePageSecond;
 import org.example.tests.base.BasePageTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -39,7 +40,12 @@ public class SeleniumExamplePageTest extends BasePageTest {
     public void checkLink() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
-        seleniumExamplePage.checkLink(); // Нужен рефакторинг, нужна вторая страница
+
+        SeleniumExamplePageSecond secondPage = seleniumExamplePage.clickLink();
+        Assert.assertEquals(secondPage.getUrl(),
+                "https://crossbrowsertesting.github.io/selenium_example_page2.html");
+        Assert.assertEquals(secondPage.getHeadline(), "Selenium Example Page 2");
+        Assert.assertEquals(secondPage.getContent(), "I am content on page 2!");
     }
 
     @Test(groups = "smoke")

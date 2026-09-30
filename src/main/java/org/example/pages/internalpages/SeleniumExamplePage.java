@@ -73,15 +73,9 @@ public class SeleniumExamplePage extends BasePage {
                 .toList();
     }
 
-    public SeleniumExamplePage checkLink() {
+    public SeleniumExamplePageSecond clickLink() {
         driver.findElement(link).click();
-        Assert.assertEquals(driver.getCurrentUrl(),
-                "https://crossbrowsertesting.github.io/selenium_example_page2.html");
-        Assert.assertEquals(driver.findElement(By.cssSelector("div h2")).getText(),
-                "Selenium Example Page 2");
-        Assert.assertEquals(driver.findElement(By.cssSelector("div p")).getText(),
-                "I am content on page 2!");
-        return this;
+        return new SeleniumExamplePageSecond(driver);
     }
 
     public String checkButton() {
