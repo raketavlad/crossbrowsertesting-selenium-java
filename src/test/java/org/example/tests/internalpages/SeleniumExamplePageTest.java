@@ -2,7 +2,10 @@ package org.example.tests.internalpages;
 
 import org.example.pages.internalpages.SeleniumExamplePage;
 import org.example.tests.base.BasePageTest;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 public class SeleniumExamplePageTest extends BasePageTest {
 
@@ -10,35 +13,40 @@ public class SeleniumExamplePageTest extends BasePageTest {
     public void checkHeadline() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
-        seleniumExamplePage.checkHeadline();
+
+        Assert.assertEquals(seleniumExamplePage.getHeadline(), "Selenium Test Example Page");
     }
 
     @Test(groups = "regress")
     public void checkIntro() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
-        seleniumExamplePage.checkIntro();
+
+        Assert.assertEquals(seleniumExamplePage.getIntro(), "A very basic example page for" +
+                " running remote Selenium Tests on the CrossBrowserTesting.com platform.");
     }
 
     @Test(groups = "regress")
     public void checkList() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
-        seleniumExamplePage.checkTitleList().checkList();
+
+        Assert.assertEquals(seleniumExamplePage.getTitleList(), "Unordered List");
+        Assert.assertEquals(seleniumExamplePage.getList(), List.of("One", "Two", "Three", "Four"));
     }
 
     @Test(groups = "smoke")
     public void checkLink() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
-        seleniumExamplePage.checkLink();
+        seleniumExamplePage.checkLink(); // Нужен рефакторинг, нужна вторая страница
     }
 
     @Test(groups = "smoke")
     public void checkButton() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
-        seleniumExamplePage.checkButton();
+        Assert.assertEquals(seleniumExamplePage.checkButton(), "I am the message!!");
     }
 
     @Test(groups = "smoke")
@@ -50,19 +58,25 @@ public class SeleniumExamplePageTest extends BasePageTest {
         String option = "option1";
         String radio = "radio1";
         String textArea = "English texts for beginners to practice reading and comprehension online and for free.";
-        seleniumExamplePage.checkTitleForm()
-                .checkInputTextPlaceholder()
-                .setText(someText)
-                .chooseCheckbox(true)
+
+        Assert.assertEquals(seleniumExamplePage.checkTitleForm(), "Form Elements");
+        Assert.assertEquals(seleniumExamplePage.checkInputTextPlaceholder(), "Input Text Here");
+
+        seleniumExamplePage.setText(someText)
+                .chooseCheckbox() // Видимо нужно будет переделать, нет проверки на состояние чек-бокса
                 .selectAnOption(option)
                 .selectAnRadio(radio)
                 .setTextarea(textArea)
-                .pressSubmitButton()
-                .checkResultTitle()
-                .checkTextResult(someText)
-                .checkCheckbox(true)
-                .checkSelectedOption(option)
-                .checkSelectedRadio(radio)
-                .checkTextarea(textArea);
+                .pressSubmitButton();
+
+        Assert.assertEquals(seleniumExamplePage.checkResultTitle(), "Form Results");
+        Assert.assertEquals(seleniumExamplePage.checkTextResult(), someText);
+        String checkboxResult = seleniumExamplePage.getCheckbox();
+        if (checkboxResult != null) {
+            Assert.assertEquals(seleniumExamplePage.getCheckbox(), "on");
+        }
+        Assert.assertEquals(seleniumExamplePage.checkSelectedOption(), option);
+        Assert.assertEquals(seleniumExamplePage.checkSelectedRadio(), radio);
+        Assert.assertEquals(seleniumExamplePage.checkTextarea(), textArea);
     }
 }

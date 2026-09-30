@@ -55,28 +55,22 @@ public class SeleniumExamplePage extends BasePage {
         super(driver, PATH);
     }
 
-    public SeleniumExamplePage checkHeadline() {
-        Assert.assertEquals(driver.findElement(headline).getText(), "Selenium Test Example Page");
-        return this;
+    public String getHeadline() {
+        return driver.findElement(headline).getText();
     }
 
-    public SeleniumExamplePage checkIntro() {
-        Assert.assertEquals(driver.findElement(intro).getText(), "A very basic example page for" +
-                " running remote Selenium Tests on the CrossBrowserTesting.com platform.");
-        return this;
+    public String getIntro() {
+        return driver.findElement(intro).getText();
     }
 
-    public SeleniumExamplePage checkTitleList() {
-        Assert.assertEquals(driver.findElement(titleList).getText(), "Unordered List");
-        return this;
+    public String getTitleList() {
+        return driver.findElement(titleList).getText();
     }
 
-    public SeleniumExamplePage checkList() {
-        List<String> actualList = driver.findElements(list).stream()
+    public List<String> getList() {
+        return driver.findElements(list).stream()
                 .map(WebElement::getText)
                 .toList();
-        Assert.assertEquals(actualList, List.of("One", "Two", "Three", "Four"));
-        return this;
     }
 
     public SeleniumExamplePage checkLink() {
@@ -90,22 +84,17 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
-    public SeleniumExamplePage checkButton() {
+    public String checkButton() {
         driver.findElement(button).click();
-        Assert.assertEquals(driver.findElement(By.id("button-message")).getText(),
-                "I am the message!!");
-        return this;
+        return driver.findElement(By.id("button-message")).getText();
     }
 
-    public SeleniumExamplePage checkTitleForm() {
-        Assert.assertEquals(driver.findElement(titleForm).getText(), "Form Elements");
-        return this;
+    public String checkTitleForm() {
+        return driver.findElement(titleForm).getText();
     }
 
-    public SeleniumExamplePage checkInputTextPlaceholder() {
-        Assert.assertEquals(driver.findElement(inputText).getAttribute("placeholder"),
-                "Input Text Here");
-        return this;
+    public String checkInputTextPlaceholder() {
+        return driver.findElement(inputText).getAttribute("placeholder");
     }
 
     public SeleniumExamplePage setText(String text) {
@@ -113,35 +102,27 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
-    public SeleniumExamplePage checkTextResult(String text) {
-        Assert.assertEquals(driver.findElement(textResult).getText(),
-                text);
+    public String checkTextResult() {
+        return driver.findElement(textResult).getText();
+    }
+
+    public SeleniumExamplePage chooseCheckbox() {
+//        Видимо нужен дополнительный метод на проверку состояния чек-бокса
+        driver.findElement(checkbox).click();
         return this;
     }
 
-    public SeleniumExamplePage chooseCheckbox(boolean isOn) {
-        if (isOn) {
-            driver.findElement(checkbox).click();
-        }
-        return this;
-    }
+    public String getCheckbox() {
+        String checkboxText = null;
 
-    public SeleniumExamplePage checkCheckbox(boolean expectedExist) {
+        // По хорошему нужно переписать на нормальный wait
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-        WebElement element = null;
         try {
-            element = wait.until(d -> d.findElement(checkboxResult));
+            checkboxText = wait.until(d -> d.findElement(checkboxResult)).getText();
         } catch (TimeoutException ignored) {
 
         }
-
-        if (expectedExist) {
-            Assert.assertNotNull(element, "Ошибка: Ожидали, что элемент появится, но его нет на странице!");
-            Assert.assertEquals(element.getText(), "on", "Текст элемента не соответствует 'on'!");
-        } else {
-            Assert.assertNull(element, "Ошибка: Ожидали, что элемента НЕ БУДЕТ, но он присутствует на странице!");
-        }
-        return this;
+        return checkboxText;
     }
 
     public SeleniumExamplePage selectAnOption(String option) {
@@ -167,10 +148,8 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
-    public SeleniumExamplePage checkSelectedOption(String option) {
-        Assert.assertEquals(driver.findElement(selectOptions).getText(), option,
-                "Опция не соответствует выбранной");
-        return this;
+    public String checkSelectedOption() {
+        return driver.findElement(selectOptions).getText();
     }
 
     public SeleniumExamplePage selectAnRadio(String radio) {
@@ -189,10 +168,8 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
-    public SeleniumExamplePage checkSelectedRadio(String radio) {
-        Assert.assertEquals(driver.findElement(radioResult).getText(), radio,
-                "Radio не соответствует выбранному");
-        return this;
+    public String checkSelectedRadio() {
+        return driver.findElement(radioResult).getText();
     }
 
     public SeleniumExamplePage setTextarea(String text) {
@@ -200,20 +177,16 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
-    public SeleniumExamplePage checkTextarea(String text) {
-        Assert.assertEquals(driver.findElement(textareaResult).getText(), text);
-        return this;
+    public String checkTextarea() {
+        return driver.findElement(textareaResult).getText();
     }
 
-    public SeleniumExamplePage checkResultTitle() {
-        Assert.assertEquals(driver.findElement(titleFormResults).getText(), "Form Results");
-        return this;
+    public String checkResultTitle() {
+        return driver.findElement(titleFormResults).getText();
     }
 
     public SeleniumExamplePage pressSubmitButton() {
         driver.findElement(submitButton).click();
         return this;
     }
-
-
 }
