@@ -71,7 +71,7 @@ public class SeleniumExamplePageTest extends BasePageTest {
         seleniumExamplePage.open();
 
         String someText = "Some text";
-        String option = "option5";
+        String option = "option1";
         String radio = "radio1";
         String textArea = "English texts for beginners to practice reading and comprehension online and for free.";
         boolean checkboxState = true;

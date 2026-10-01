@@ -48,19 +48,19 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getHeadline() {
-        return driver.findElement(headline).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(headline)).getText();
     }
 
     public String getIntro() {
-        return driver.findElement(intro).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(intro)).getText();
     }
 
     public String getTitleLinkAndButton() {
-        return driver.findElement(titleLinkAndButton).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleLinkAndButton)).getText();
     }
 
     public String getTitleList() {
-        return driver.findElement(titleList).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleList)).getText();
     }
 
     public List<String> getList() {
@@ -70,25 +70,25 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public SeleniumExamplePageSecond clickLink() {
-        driver.findElement(link).click();
+        wait.until(ExpectedConditions.elementToBeClickable(link)).click();
         return new SeleniumExamplePageSecond(driver);
     }
 
     public SeleniumExamplePage clickButton() {
-        driver.findElement(button).click();
+        wait.until(ExpectedConditions.elementToBeClickable(button)).click();
         return this;
     }
 
     public String getButtonText() {
-        return driver.findElement(buttonText).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(buttonText)).getText();
     }
 
     public String getTitleForm() {
-        return driver.findElement(titleForm).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleForm)).getText();
     }
 
     public String getInputTextPlaceholder() {
-        return driver.findElement(inputText).getAttribute("placeholder");
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(inputText)).getAttribute("placeholder");
     }
 
     public SeleniumExamplePage setText(String text) {
@@ -97,11 +97,7 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getTextResult() {
-        return driver.findElement(textResult).getText();
-    }
-
-    public boolean isSelectedCheckbox() {
-        return driver.findElement(checkbox).isSelected();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(textResult)).getText();
     }
 
     public SeleniumExamplePage selectCheckbox(boolean checked) {
@@ -114,7 +110,7 @@ public class SeleniumExamplePage extends BasePage {
 
     public String getCheckboxResult(boolean isSelect) {
         if (isSelect) {
-            return  wait.until(ExpectedConditions.visibilityOfElementLocated(checkboxResult))
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(checkboxResult))
                     .getText();
         } else {
             return "";
@@ -128,7 +124,7 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getSelectedOption() {
-        return driver.findElement(selectOptions).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(selectOptions)).getText();
     }
 
     public SeleniumExamplePage selectAnRadio(String radio) {
@@ -138,24 +134,24 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getSelectedRadio() {
-        return driver.findElement(radioResult).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(radioResult)).getText();
     }
 
     public SeleniumExamplePage setTextarea(String text) {
-        driver.findElement(textarea).sendKeys(text);
+        wait.until(ExpectedConditions.elementToBeClickable(textarea)).sendKeys(text);
         return this;
     }
 
     public String getTextarea() {
-        return driver.findElement(textareaResult).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(textareaResult)).getText();
     }
 
     public String getResultTitle() {
-        return driver.findElement(titleFormResults).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleFormResults)).getText();
     }
 
     public SeleniumExamplePage pressSubmitButton() {
-        driver.findElement(submitButton).click();
+        wait.until(ExpectedConditions.elementToBeClickable(submitButton)).click();
         return this;
     }
 }
