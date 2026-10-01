@@ -5,10 +5,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
-import java.time.Duration;
 import java.util.List;
 
 public class SeleniumExamplePage extends BasePage {
@@ -31,15 +30,8 @@ public class SeleniumExamplePage extends BasePage {
     private final By inputText = By.cssSelector("input[name='text']");
     private final By checkbox = By.cssSelector("input[name='checkbox']");
     private final By dropdown = By.id("dropdown");
-    private final By dropdownOption1 = By.cssSelector("option[value='option1']");
-    private final By dropdownOption2 = By.cssSelector("option[value='option2']");
-    private final By dropdownOption3 = By.cssSelector("option[value='option3']");
-    private final By dropdownOption4 = By.cssSelector("option[value='option4']");
     private final By textarea = By.xpath("//textarea");
-    private final By radio1 = By.id("radiobtn1");
-    private final By radio2 = By.cssSelector("input[value='radio2']");
     private final By submitButton = By.cssSelector("#submitbtn");
-
 
     // Селекторы результата
     private final By titleFormResults = By.cssSelector("#form-results p");
@@ -63,6 +55,10 @@ public class SeleniumExamplePage extends BasePage {
         return driver.findElement(intro).getText();
     }
 
+    public String getTitleLinkAndButton() {
+        return driver.findElement(titleLinkAndButton).getText();
+    }
+
     public String getTitleList() {
         return driver.findElement(titleList).getText();
     }
@@ -78,16 +74,16 @@ public class SeleniumExamplePage extends BasePage {
         return new SeleniumExamplePageSecond(driver);
     }
 
-    public String checkButton() {
+    public String getButtonText() {
         driver.findElement(button).click();
         return driver.findElement(By.id("button-message")).getText();
     }
 
-    public String checkTitleForm() {
+    public String getTitleForm() {
         return driver.findElement(titleForm).getText();
     }
 
-    public String checkInputTextPlaceholder() {
+    public String getInputTextPlaceholder() {
         return driver.findElement(inputText).getAttribute("placeholder");
     }
 
@@ -96,21 +92,21 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
-    public String checkTextResult() {
+    public String getTextResult() {
         return driver.findElement(textResult).getText();
     }
 
-    public SeleniumExamplePage chooseCheckbox() {
-//        Видимо нужен дополнительный метод на проверку состояния чек-бокса
+    public boolean isSelectedCheckbox() {
+        return driver.findElement(checkbox).isSelected();
+    }
+
+    public SeleniumExamplePage selectCheckbox() {
         driver.findElement(checkbox).click();
         return this;
     }
 
     public String getCheckbox() {
         String checkboxText = null;
-
-        // По хорошему нужно переписать на нормальный wait
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         try {
             checkboxText = wait.until(d -> d.findElement(checkboxResult)).getText();
         } catch (TimeoutException ignored) {
@@ -119,50 +115,28 @@ public class SeleniumExamplePage extends BasePage {
         return checkboxText;
     }
 
+    public boolean hasOption(String option) {
+        Select select = new Select(driver.findElement(dropdown));
+        return select.getOptions().stream().anyMatch(opt -> opt.getAttribute("value").equals(option));
+    }
+
     public SeleniumExamplePage selectAnOption(String option) {
-        driver.findElement(dropdown).click();
-        // можно упростить через класс Select и Try-Catch (НУЖНО РАЗОБРАТЬСЯ И ОТРЕФАКТОРИТЬ)
-        switch (option) {
-            case ("option1"):
-                driver.findElement(dropdownOption1).click();
-                break;
-            case ("option2"):
-                driver.findElement(dropdownOption2).click();
-                break;
-            case ("option3"):
-                driver.findElement(dropdownOption3).click();
-                break;
-            case ("option4"):
-                driver.findElement(dropdownOption4).click();
-                break;
-            default:
-                Assert.fail("Выбранная опция отсутствует в выпадающем списке");
-                break;
-        }
+        Select select = new Select(driver.findElement(dropdown));
+        select.selectByValue(option);
         return this;
     }
 
-    public String checkSelectedOption() {
+    public String getSelectedOption() {
         return driver.findElement(selectOptions).getText();
     }
 
     public SeleniumExamplePage selectAnRadio(String radio) {
-        // можно упростить через класс Select и Try-Catch (НУЖНО РАЗОБРАТЬСЯ И ОТРЕФАКТОРИТЬ)
-        switch (radio) {
-            case ("radio1"):
-                driver.findElement(radio1).click();
-                break;
-            case ("radio2"):
-                driver.findElement(radio2).click();
-                break;
-            default:
-                Assert.fail("Выбранный radio отсутствует на странице");
-                break;
-        }
+        By locator = By.cssSelector(String.format("input[value='%s']", radio));
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
         return this;
     }
 
-    public String checkSelectedRadio() {
+    public String getSelectedRadio() {
         return driver.findElement(radioResult).getText();
     }
 
@@ -171,11 +145,11 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
-    public String checkTextarea() {
+    public String getTextarea() {
         return driver.findElement(textareaResult).getText();
     }
 
-    public String checkResultTitle() {
+    public String getResultTitle() {
         return driver.findElement(titleFormResults).getText();
     }
 

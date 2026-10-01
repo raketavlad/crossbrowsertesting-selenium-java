@@ -36,6 +36,14 @@ public class SeleniumExamplePageTest extends BasePageTest {
         Assert.assertEquals(seleniumExamplePage.getList(), List.of("One", "Two", "Three", "Four"));
     }
 
+    @Test(groups = "regress")
+    public void checkTitleLinkAndButton() {
+        SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
+        seleniumExamplePage.open();
+
+        Assert.assertEquals(seleniumExamplePage.getTitleLinkAndButton(), "Links and buttons");
+    }
+
     @Test(groups = "smoke")
     public void checkLink() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
@@ -49,10 +57,10 @@ public class SeleniumExamplePageTest extends BasePageTest {
     }
 
     @Test(groups = "smoke")
-    public void checkButton() {
+    public void getButtonText() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
-        Assert.assertEquals(seleniumExamplePage.checkButton(), "I am the message!!");
+        Assert.assertEquals(seleniumExamplePage.getButtonText(), "I am the message!!");
     }
 
     @Test(groups = "smoke")
@@ -65,24 +73,32 @@ public class SeleniumExamplePageTest extends BasePageTest {
         String radio = "radio1";
         String textArea = "English texts for beginners to practice reading and comprehension online and for free.";
 
-        Assert.assertEquals(seleniumExamplePage.checkTitleForm(), "Form Elements");
-        Assert.assertEquals(seleniumExamplePage.checkInputTextPlaceholder(), "Input Text Here");
+        Assert.assertEquals(seleniumExamplePage.getTitleForm(), "Form Elements");
+        Assert.assertEquals(seleniumExamplePage.getInputTextPlaceholder(), "Input Text Here");
 
         seleniumExamplePage.setText(someText)
-                .chooseCheckbox() // Видимо нужно будет переделать, нет проверки на состояние чек-бокса
-                .selectAnOption(option)
                 .selectAnRadio(radio)
                 .setTextarea(textArea)
                 .pressSubmitButton();
 
-        Assert.assertEquals(seleniumExamplePage.checkResultTitle(), "Form Results");
-        Assert.assertEquals(seleniumExamplePage.checkTextResult(), someText);
+        if (!seleniumExamplePage.isSelectedCheckbox()) {
+            seleniumExamplePage.selectCheckbox();
+        }
+
+        if (seleniumExamplePage.hasOption(option)) {
+            seleniumExamplePage.selectAnOption(option);
+        } else {
+            Assert.fail("Выбранная опция " + option + " отсутствует в выпадающем списке");
+        }
+
+        Assert.assertEquals(seleniumExamplePage.getResultTitle(), "Form Results");
+        Assert.assertEquals(seleniumExamplePage.getTextResult(), someText);
         String checkboxResult = seleniumExamplePage.getCheckbox();
         if (checkboxResult != null) {
             Assert.assertEquals(seleniumExamplePage.getCheckbox(), "on");
         }
-        Assert.assertEquals(seleniumExamplePage.checkSelectedOption(), option);
-        Assert.assertEquals(seleniumExamplePage.checkSelectedRadio(), radio);
-        Assert.assertEquals(seleniumExamplePage.checkTextarea(), textArea);
+        Assert.assertEquals(seleniumExamplePage.getSelectedOption(), option);
+        Assert.assertEquals(seleniumExamplePage.getSelectedRadio(), radio);
+        Assert.assertEquals(seleniumExamplePage.getTextarea(), textArea);
     }
 }
