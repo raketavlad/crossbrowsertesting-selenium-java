@@ -31,7 +31,12 @@ public abstract class BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    // Можно доработать с учетом generics и отдавать уже экземпляр класса
     protected void click(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    }
+
+    protected void inputText(By locator, String text) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).sendKeys(text);
     }
 }

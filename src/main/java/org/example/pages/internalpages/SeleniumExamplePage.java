@@ -92,7 +92,7 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public SeleniumExamplePage setText(String text) {
-        wait.until(ExpectedConditions.elementToBeClickable(inputText)).sendKeys(text);
+        inputText(inputText, text);
         return this;
     }
 
@@ -137,7 +137,7 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public SeleniumExamplePage setTextarea(String text) {
-        wait.until(ExpectedConditions.elementToBeClickable(textarea)).sendKeys(text);
+        inputText(textarea, text);
         return this;
     }
 
