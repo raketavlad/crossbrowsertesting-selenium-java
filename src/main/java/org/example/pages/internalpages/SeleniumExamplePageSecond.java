@@ -8,7 +8,6 @@ public class SeleniumExamplePageSecond extends BasePage {
 
     private final By headline = By.xpath("//h2");
     private final By content = By.xpath("//p");
-    ;
 
     private static final String PATH = "/selenium_example_page2.html";
 

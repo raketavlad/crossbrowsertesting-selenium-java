@@ -2,7 +2,6 @@ package org.example.pages.internalpages;
 
 import org.example.pages.base.BasePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,6 +23,7 @@ public class SeleniumExamplePage extends BasePage {
     private final By titleLinkAndButton = By.xpath("//p[text()='Links and buttons']");
     private final By link = By.cssSelector("div#link-test a");
     private final By button = By.cssSelector("div#link-test button");
+    private final By buttonText = By.id("button-message");
 
     // Селекторы формы ввода
     private final By titleForm = By.xpath("//p[text()='Form Elements']");
@@ -74,9 +74,13 @@ public class SeleniumExamplePage extends BasePage {
         return new SeleniumExamplePageSecond(driver);
     }
 
-    public String getButtonText() {
+    public SeleniumExamplePage clickButton() {
         driver.findElement(button).click();
-        return driver.findElement(By.id("button-message")).getText();
+        return this;
+    }
+
+    public String getButtonText() {
+        return driver.findElement(buttonText).getText();
     }
 
     public String getTitleForm() {
@@ -100,24 +104,21 @@ public class SeleniumExamplePage extends BasePage {
         return driver.findElement(checkbox).isSelected();
     }
 
-    public SeleniumExamplePage selectCheckbox() {
-        driver.findElement(checkbox).click();
+    public SeleniumExamplePage selectCheckbox(boolean checked) {
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(checkbox));
+        if (element.isSelected() != checked) {
+            element.click();
+        }
         return this;
     }
 
-    public String getCheckbox() {
-        String checkboxText = null;
-        try {
-            checkboxText = wait.until(d -> d.findElement(checkboxResult)).getText();
-        } catch (TimeoutException ignored) {
-
+    public String getCheckboxResult(boolean isSelect) {
+        if (isSelect) {
+            return  wait.until(ExpectedConditions.visibilityOfElementLocated(checkboxResult))
+                    .getText();
+        } else {
+            return "";
         }
-        return checkboxText;
-    }
-
-    public boolean hasOption(String option) {
-        Select select = new Select(driver.findElement(dropdown));
-        return select.getOptions().stream().anyMatch(opt -> opt.getAttribute("value").equals(option));
     }
 
     public SeleniumExamplePage selectAnOption(String option) {

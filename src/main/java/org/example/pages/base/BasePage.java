@@ -2,7 +2,6 @@ package org.example.pages.base;
 
 import org.example.common.ConfigReader;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -18,7 +17,6 @@ public abstract class BasePage {
         this.relativePath = relativePath;
         this.wait = new WebDriverWait(driver,
                 Duration.ofSeconds(ConfigReader.getInt("explicit.wait", 15)));
-        PageFactory.initElements(driver, this);
     }
 
     public void open() {

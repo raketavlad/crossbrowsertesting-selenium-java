@@ -57,9 +57,11 @@ public class SeleniumExamplePageTest extends BasePageTest {
     }
 
     @Test(groups = "smoke")
-    public void getButtonText() {
+    public void checkButtonText() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
+
+        seleniumExamplePage.clickButton();
         Assert.assertEquals(seleniumExamplePage.getButtonText(), "I am the message!!");
     }
 
@@ -69,34 +71,24 @@ public class SeleniumExamplePageTest extends BasePageTest {
         seleniumExamplePage.open();
 
         String someText = "Some text";
-        String option = "option1";
+        String option = "option5";
         String radio = "radio1";
         String textArea = "English texts for beginners to practice reading and comprehension online and for free.";
+        boolean checkboxState = true;
 
         Assert.assertEquals(seleniumExamplePage.getTitleForm(), "Form Elements");
         Assert.assertEquals(seleniumExamplePage.getInputTextPlaceholder(), "Input Text Here");
 
         seleniumExamplePage.setText(someText)
                 .selectAnRadio(radio)
+                .selectCheckbox(checkboxState)
+                .selectAnOption(option)
                 .setTextarea(textArea)
                 .pressSubmitButton();
 
-        if (!seleniumExamplePage.isSelectedCheckbox()) {
-            seleniumExamplePage.selectCheckbox();
-        }
-
-        if (seleniumExamplePage.hasOption(option)) {
-            seleniumExamplePage.selectAnOption(option);
-        } else {
-            Assert.fail("Выбранная опция " + option + " отсутствует в выпадающем списке");
-        }
-
         Assert.assertEquals(seleniumExamplePage.getResultTitle(), "Form Results");
         Assert.assertEquals(seleniumExamplePage.getTextResult(), someText);
-        String checkboxResult = seleniumExamplePage.getCheckbox();
-        if (checkboxResult != null) {
-            Assert.assertEquals(seleniumExamplePage.getCheckbox(), "on");
-        }
+        Assert.assertEquals(seleniumExamplePage.getCheckboxResult(checkboxState), "on");
         Assert.assertEquals(seleniumExamplePage.getSelectedOption(), option);
         Assert.assertEquals(seleniumExamplePage.getSelectedRadio(), radio);
         Assert.assertEquals(seleniumExamplePage.getTextarea(), textArea);
