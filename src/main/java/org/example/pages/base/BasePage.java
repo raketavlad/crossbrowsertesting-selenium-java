@@ -30,4 +30,8 @@ public abstract class BasePage {
     protected WebElement waitVisible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
+
+    protected void click(By locator) {
+        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+    }
 }

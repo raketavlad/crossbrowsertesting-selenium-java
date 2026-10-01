@@ -70,12 +70,12 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public SeleniumExamplePageSecond clickLink() {
-        wait.until(ExpectedConditions.elementToBeClickable(link)).click();
+        click(link);
         return new SeleniumExamplePageSecond(driver);
     }
 
     public SeleniumExamplePage clickButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(button)).click();
+        click(button);
         return this;
     }
 
@@ -128,7 +128,7 @@ public class SeleniumExamplePage extends BasePage {
 
     public SeleniumExamplePage selectAnRadio(String radio) {
         By locator = By.cssSelector(String.format("input[value='%s']", radio));
-        wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
+        click(locator);
         return this;
     }
 
@@ -150,7 +150,7 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public SeleniumExamplePage pressSubmitButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(submitButton)).click();
+        click(submitButton);
         return this;
     }
 }
