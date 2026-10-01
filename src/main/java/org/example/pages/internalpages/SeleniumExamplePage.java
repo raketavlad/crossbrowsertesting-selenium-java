@@ -48,19 +48,19 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getHeadline() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(headline)).getText();
+        return waitVisible(headline).getText();
     }
 
     public String getIntro() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(intro)).getText();
+        return waitVisible(intro).getText();
     }
 
     public String getTitleLinkAndButton() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleLinkAndButton)).getText();
+        return waitVisible(titleLinkAndButton).getText();
     }
 
     public String getTitleList() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleList)).getText();
+        return waitVisible(titleList).getText();
     }
 
     public List<String> getList() {
@@ -80,24 +80,24 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getButtonText() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(buttonText)).getText();
+        return waitVisible(buttonText).getText();
     }
 
     public String getTitleForm() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleForm)).getText();
+        return waitVisible(titleForm).getText();
     }
 
     public String getInputTextPlaceholder() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(inputText)).getAttribute("placeholder");
+        return waitVisible(inputText).getAttribute("placeholder");
     }
 
     public SeleniumExamplePage setText(String text) {
-        driver.findElement(inputText).sendKeys(text);
+        wait.until(ExpectedConditions.elementToBeClickable(inputText)).sendKeys(text);
         return this;
     }
 
     public String getTextResult() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(textResult)).getText();
+        return waitVisible(textResult).getText();
     }
 
     public SeleniumExamplePage selectCheckbox(boolean checked) {
@@ -110,8 +110,7 @@ public class SeleniumExamplePage extends BasePage {
 
     public String getCheckboxResult(boolean isSelect) {
         if (isSelect) {
-            return wait.until(ExpectedConditions.visibilityOfElementLocated(checkboxResult))
-                    .getText();
+            return waitVisible(checkboxResult).getText();
         } else {
             return "";
         }
@@ -124,7 +123,7 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getSelectedOption() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(selectOptions)).getText();
+        return waitVisible(selectOptions).getText();
     }
 
     public SeleniumExamplePage selectAnRadio(String radio) {
@@ -134,7 +133,7 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getSelectedRadio() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(radioResult)).getText();
+        return waitVisible(radioResult).getText();
     }
 
     public SeleniumExamplePage setTextarea(String text) {
@@ -143,11 +142,11 @@ public class SeleniumExamplePage extends BasePage {
     }
 
     public String getTextarea() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(textareaResult)).getText();
+        return waitVisible(textareaResult).getText();
     }
 
     public String getResultTitle() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(titleFormResults)).getText();
+        return waitVisible(titleFormResults).getText();
     }
 
     public SeleniumExamplePage pressSubmitButton() {
