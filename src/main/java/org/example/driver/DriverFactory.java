@@ -46,7 +46,10 @@ public final class DriverFactory {
     private static FirefoxOptions buildFirefoxOptions(boolean headless) {
         FirefoxOptions options = new FirefoxOptions();
         if (headless) {
-            options.addArguments("-headless");
+            options.addArguments(
+                    "-headless",
+                    "-width=1920",
+                    "-height=1080");
         }
         return options;
     }
