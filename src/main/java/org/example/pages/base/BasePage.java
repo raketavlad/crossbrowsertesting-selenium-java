@@ -4,6 +4,8 @@ import org.example.common.ConfigReader;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -38,5 +40,14 @@ public abstract class BasePage {
 
     protected void inputText(By locator, String text) {
         wait.until(ExpectedConditions.elementToBeClickable(locator)).sendKeys(text);
+    }
+
+    protected void hoverToElement(By locator) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(locator)).perform();
+    }
+
+    protected String getHexColor(By locator, String cssProperty) {
+        return Color.fromString(driver.findElement(locator).getCssValue(cssProperty)).asHex();
     }
 }
