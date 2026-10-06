@@ -39,12 +39,15 @@ public abstract class BasePage {
     }
 
     protected void inputText(By locator, String text) {
-        wait.until(ExpectedConditions.elementToBeClickable(locator)).sendKeys(text);
+        WebElement field = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        field.clear();
+        field.sendKeys(text);
     }
 
     protected void hoverToElement(By locator) {
+        // ИИ говорит можно вынести в переменную и засунуть в конструктор
         Actions actions = new Actions(driver);
-        actions.moveToElement(driver.findElement(locator)).perform();
+        actions.moveToElement(waitVisible(locator)).perform();
     }
 
     protected String getHexColor(By locator, String cssProperty) {

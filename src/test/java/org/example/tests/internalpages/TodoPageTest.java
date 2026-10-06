@@ -87,7 +87,8 @@ public class TodoPageTest extends BasePageTest {
         page.clickTodoCheckbox(nameTodo).clickArchiveButton();
         Assert.assertEquals(page.getAllTodoCount(), --allTodoCount,
                 "Общее количество не изменилось, хотя должно уменьшиться на 1");
-        // Нужна ли проверка отсутствие этого конкретного todo?
+        Assert.assertFalse(page.isTodoPresent(nameTodo),
+                "Отправленный в архив todo не должен быть виден на странице");
     }
 
     @Test(description = "Проверка стилей кнопки archive без и при hover",

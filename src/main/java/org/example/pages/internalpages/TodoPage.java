@@ -8,11 +8,13 @@ import org.openqa.selenium.WebDriver;
 public class TodoPage extends BasePage {
 
     private static final String PATH = "/todo-app.html";
+    private static final int REMAINING_COUNT_INDEX = 0;
+    private static final int ALL_COUNT_INDEX = 2;
 
     private final By headline = By.cssSelector("h2");
     private final By todoCounts = By.cssSelector("span.ng-binding");
 
-    private final By archiveButon = By.xpath("//a[text()='archive']");
+    private final By archiveButton = By.xpath("//a[text()='archive']");
     private final By todoInput = By.cssSelector("input#todotext");
     private final By addButton = By.id("addbutton");
 
@@ -25,14 +27,12 @@ public class TodoPage extends BasePage {
         return waitVisible(headline).getText();
     }
 
-    // возможно нужно вынести в переменную
     public int getAllTodoCount() {
-        return getCountTodo(2);
+        return getCountTodo(ALL_COUNT_INDEX);
     }
 
-    // возможно нужно вынести в переменную
     public int getRemainingTodoCount() {
-        return getCountTodo(0);
+        return getCountTodo(REMAINING_COUNT_INDEX);
     }
 
     private int getCountTodo(int index) {
@@ -51,8 +51,12 @@ public class TodoPage extends BasePage {
     }
 
     public TodoPage clickArchiveButton() {
-        click(archiveButon);
+        click(archiveButton);
         return this;
+    }
+
+    public boolean isTodoPresent(String todoText) {
+        return !driver.findElements(getTodoLocator(todoText)).isEmpty();
     }
 
     public TodoPage setTodoInput(String todoText) {
@@ -70,7 +74,7 @@ public class TodoPage extends BasePage {
     }
 
     public String getTextStyles(String todoText) {
-        return driver.findElement(getTodoLocator(todoText)).getCssValue("text-decoration-line");
+        return waitVisible(getTodoLocator(todoText)).getCssValue("text-decoration-line");
     }
 
     private By getTodoLocator(String todoText) {
@@ -78,17 +82,16 @@ public class TodoPage extends BasePage {
     }
 
     public TodoPage hoverToArchiveButton() {
-        hoverToElement(archiveButon);
+        hoverToElement(archiveButton);
         return this;
     }
 
     public String getColorArchiveButton() {
-//        return driver.findElement(archiveButon).getCssValue("color");
-        return getHexColor(archiveButon, "color");
+        return getHexColor(archiveButton, "color");
     }
 
     public String getTextDecorationLineArchiveButton() {
-        return driver.findElement(archiveButon).getCssValue("text-decoration-line");
+        return waitVisible(archiveButton).getCssValue("text-decoration-line");
     }
 
     public TodoPage hoverToAddButton() {
@@ -97,7 +100,6 @@ public class TodoPage extends BasePage {
     }
 
     public String getBackgroundColorAddButton() {
-//        return driver.findElement(addButton).getCssValue("background-color");
         return getHexColor(addButton, "background-color");
     }
 }
