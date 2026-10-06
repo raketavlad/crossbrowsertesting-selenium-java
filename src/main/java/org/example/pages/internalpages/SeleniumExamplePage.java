@@ -11,6 +11,8 @@ import java.util.List;
 
 public class SeleniumExamplePage extends BasePage {
 
+    private static final String PATH = "/selenium_example_page.html";
+
     // Селекторы шапки
     private final By headline = By.xpath("//h2[contains(text(), 'Selenium')]");
     private final By intro = By.id("intro");
@@ -40,8 +42,6 @@ public class SeleniumExamplePage extends BasePage {
     private final By selectOptions = By.xpath("//span[text()='select']/following-sibling::span");
     private final By radioResult = By.xpath("//span[text()='radio']/following-sibling::span");
     private final By textareaResult = By.xpath("//span[text()='textarea']/following-sibling::span");
-
-    private static final String PATH = "/selenium_example_page.html";
 
     public SeleniumExamplePage(WebDriver driver) {
         super(driver, PATH);
