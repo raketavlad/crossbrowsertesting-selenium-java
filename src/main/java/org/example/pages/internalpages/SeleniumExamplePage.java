@@ -1,5 +1,6 @@
 package org.example.pages.internalpages;
 
+import io.qameta.allure.Step;
 import org.example.pages.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -47,6 +48,7 @@ public class SeleniumExamplePage extends BasePage {
         super(driver, PATH);
     }
 
+
     public String getHeadline() {
         return waitVisible(headline).getText();
     }
@@ -59,47 +61,57 @@ public class SeleniumExamplePage extends BasePage {
         return waitVisible(titleLinkAndButton).getText();
     }
 
+    @Step("Получить заголовок блока List")
     public String getTitleList() {
         return waitVisible(titleList).getText();
     }
 
+    @Step("Получить значения списка")
     public List<String> getList() {
         return driver.findElements(list).stream()
                 .map(WebElement::getText)
                 .toList();
     }
 
+    @Step("Нажать на ссылку перехода на вторую страницу")
     public SeleniumExamplePageSecond clickLink() {
         click(link);
         return new SeleniumExamplePageSecond(driver);
     }
 
+    @Step("Нажать на кнопку Show Message")
     public SeleniumExamplePage clickButton() {
         click(button);
         return this;
     }
 
+    @Step("Получить текст, который появился после нажатия кнопки")
     public String getButtonText() {
         return waitVisible(buttonText).getText();
     }
 
+    @Step("Получить заголовок формы")
     public String getTitleForm() {
         return waitVisible(titleForm).getText();
     }
 
+    @Step("Получить placeholder поля ввода")
     public String getInputTextPlaceholder() {
         return waitVisible(inputText).getAttribute("placeholder");
     }
 
+    @Step("Заполнить поле ввода текстом")
     public SeleniumExamplePage setText(String text) {
         inputText(inputText, text);
         return this;
     }
 
+    @Step("Получить текст из результата")
     public String getTextResult() {
         return waitVisible(textResult).getText();
     }
 
+    @Step("Нажать на чек-бокс")
     public SeleniumExamplePage selectCheckbox(boolean checked) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(checkbox));
         if (element.isSelected() != checked) {
@@ -108,6 +120,7 @@ public class SeleniumExamplePage extends BasePage {
         return this;
     }
 
+    @Step("Получить значение чек-бокса из результата")
     public String getCheckboxResult(boolean isSelect) {
         if (isSelect) {
             return waitVisible(checkboxResult).getText();
@@ -116,39 +129,47 @@ public class SeleniumExamplePage extends BasePage {
         }
     }
 
+    @Step("Выбрать опцию из выпадающего списка")
     public SeleniumExamplePage selectAnOption(String option) {
         Select select = new Select(driver.findElement(dropdown));
         select.selectByValue(option);
         return this;
     }
 
+    @Step("Получить значение выбранной опции из результата")
     public String getSelectedOption() {
         return waitVisible(selectOptions).getText();
     }
 
+    @Step("Нажать на одно значение radio")
     public SeleniumExamplePage selectAnRadio(String radio) {
         By locator = By.cssSelector(String.format("input[value='%s']", radio));
         click(locator);
         return this;
     }
 
+    @Step("Получить значение выбранного radio из результата")
     public String getSelectedRadio() {
         return waitVisible(radioResult).getText();
     }
 
+    @Step("Заполнить текстом блок textarea")
     public SeleniumExamplePage setTextarea(String text) {
         inputText(textarea, text);
         return this;
     }
 
+    @Step("Получить значение textarea из результата")
     public String getTextarea() {
         return waitVisible(textareaResult).getText();
     }
 
+    @Step("Получить значение заголовка формы результата")
     public String getResultTitle() {
         return waitVisible(titleFormResults).getText();
     }
 
+    @Step("Нажать кнопку Submit")
     public SeleniumExamplePage pressSubmitButton() {
         click(submitButton);
         return this;
