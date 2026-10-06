@@ -113,9 +113,7 @@ public class TodoPageTest extends BasePageTest {
         page.open();
 
         Assert.assertEquals(page.getBackgroundColorAddButton(), "#337ab7");
-
         page.hoverToAddButton();
-
         Assert.assertEquals(page.getBackgroundColorAddButton(), "#286090");
     }
 }

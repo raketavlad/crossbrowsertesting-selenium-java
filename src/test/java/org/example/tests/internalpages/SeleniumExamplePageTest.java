@@ -11,7 +11,8 @@ import java.util.List;
 
 public class SeleniumExamplePageTest extends BasePageTest {
 
-    @Test(groups = "regress")
+    @Test(description = "Проверка заголовка страницы",
+            groups = "regress")
     public void checkHeadline() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
@@ -19,7 +20,8 @@ public class SeleniumExamplePageTest extends BasePageTest {
         Assert.assertEquals(seleniumExamplePage.getHeadline(), "Selenium Test Example Page");
     }
 
-    @Test(groups = "regress")
+    @Test(description = "Проверка описания страницы",
+            groups = "regress")
     public void checkIntro() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
@@ -28,7 +30,8 @@ public class SeleniumExamplePageTest extends BasePageTest {
                 " running remote Selenium Tests on the CrossBrowserTesting.com platform.");
     }
 
-    @Test(groups = "regress")
+    @Test(description = "Проверка списка",
+            groups = "regress")
     public void checkList() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
@@ -37,7 +40,8 @@ public class SeleniumExamplePageTest extends BasePageTest {
         Assert.assertEquals(seleniumExamplePage.getList(), List.of("One", "Two", "Three", "Four"));
     }
 
-    @Test(groups = "regress")
+    @Test(description = "Проверка заголовка блока с ссылкой и кнопкой",
+            groups = "regress")
     public void checkTitleLinkAndButton() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
@@ -45,7 +49,8 @@ public class SeleniumExamplePageTest extends BasePageTest {
         Assert.assertEquals(seleniumExamplePage.getTitleLinkAndButton(), "Links and buttons");
     }
 
-    @Test(groups = "smoke")
+    @Test(description = "Проверка работы ссылки и контента на второй странице",
+            groups = "smoke")
     public void checkLink() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
@@ -57,7 +62,8 @@ public class SeleniumExamplePageTest extends BasePageTest {
         Assert.assertEquals(secondPage.getContent(), "I am content on page 2!");
     }
 
-    @Test(groups = "smoke")
+    @Test(description = "Проверка работы кнопки Show Message",
+            groups = "smoke")
     public void checkButtonText() {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
         seleniumExamplePage.open();
@@ -66,7 +72,9 @@ public class SeleniumExamplePageTest extends BasePageTest {
         Assert.assertEquals(seleniumExamplePage.getButtonText(), "I am the message!!");
     }
 
-    @Test(dataProvider = "testForm", groups = "smoke")
+    @Test(description = "Проверка формы",
+            groups = "smoke",
+            dataProvider = "testForm")
     public void checkForm(String text, String option, String radio, String textArea, boolean checkboxState,
                           String checkBoxResult) {
         SeleniumExamplePage seleniumExamplePage = new SeleniumExamplePage(getDriver());
@@ -92,7 +100,7 @@ public class SeleniumExamplePageTest extends BasePageTest {
 
     @DataProvider(name = "testForm")
     private Object[][] getData() {
-        return new Object[][] {
+        return new Object[][]{
                 {"text1", "option1", "radio1", "textarea1", true, "on"},
                 {"text2", "option2", "radio2", "textarea2", false, ""},
                 {"text3", "option3", "radio1", "textarea3", false, ""},
