@@ -1,11 +1,14 @@
 package org.example.tests.internalpages;
 
+import org.example.listeners.ScreenshotListener;
 import org.example.pages.internalpages.LoginForm;
 import org.example.tests.base.BasePageTest;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(ScreenshotListener.class)
 public class LoginFormTest extends BasePageTest {
 
     @Test(description = "Проверка заголовка страницы аутентификации",
