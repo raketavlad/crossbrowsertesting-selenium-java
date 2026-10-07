@@ -15,11 +15,13 @@ public abstract class BasePage {
 
     protected WebDriver driver;
     protected WebDriverWait wait;
+    protected final Actions actions;
     private final String relativePath;
 
     public BasePage(WebDriver driver, String relativePath) {
         this.driver = driver;
         this.relativePath = relativePath;
+        this.actions = new Actions(driver);
         this.wait = new WebDriverWait(driver,
                 Duration.ofSeconds(ConfigReader.getInt("explicit.wait", 15)));
     }
@@ -45,8 +47,6 @@ public abstract class BasePage {
     }
 
     protected void hoverToElement(By locator) {
-        // ИИ говорит можно вынести в переменную и засунуть в конструктор
-        Actions actions = new Actions(driver);
         actions.moveToElement(waitVisible(locator)).perform();
     }
 

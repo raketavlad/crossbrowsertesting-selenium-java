@@ -4,7 +4,6 @@ import io.qameta.allure.Step;
 import org.example.pages.base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 
 public class DragAndDropPage extends BasePage {
 
@@ -40,8 +39,7 @@ public class DragAndDropPage extends BasePage {
 
     @Step("Перетащить элемент")
     public DragAndDropPage dragAndDropElement() {
-        Actions action = new Actions(driver);
-        action.dragAndDrop(waitVisible(element), waitVisible(dropArea)).perform();
+        actions.dragAndDrop(waitVisible(element), waitVisible(dropArea)).perform();
         return this;
     }
 }
